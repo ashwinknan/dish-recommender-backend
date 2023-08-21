@@ -34,7 +34,7 @@ app.post('/getIngredients', async (req, res) => {
     const dishName = req.body.dishName;
 
     try {
-        const response = await axios.post('https://api.openai.com/v1/engines/gpt-3.5-turbo/completions', {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             messages: [
                 {
                     role: "user",
