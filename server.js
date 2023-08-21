@@ -18,10 +18,15 @@ app.post('/getIngredients', async (req, res) => {
     const dishName = req.body.dishName;
 
     try {
-        const response = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
-            prompt: `You are culinary expert. You only know about dishes and their recipes. Provide a detailed list of ingredients traditionally used to make this dish ${dishName}. Give the responses as an ordered list, and do not provide any description about the dish or the ingredients. Don't include any inappropriate or offensive language, or obscene sexual references`,
+        const response = await axios.post('https://api.openai.com/v1/engines/gpt-3.5-turbo/completions', {
+            messages: [
+                {
+                    role: "user",
+                    content: `You are a culinary expert. You only know about dishes and their recipes. Provide a detailed list of ingredients traditionally used to make the dish ${dishName}. Give the responses as an ordered list, and do not provide any description about the dish or the ingredients.`
+                }
+            ],
             max_tokens: 350,
-            temperature:0.3
+            temperature: 0.3
         }, {
             headers: {
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
@@ -29,7 +34,7 @@ app.post('/getIngredients', async (req, res) => {
             }
         });
 
-        const ingredients = response.data.choices[0].text.trim();
+        const ingredients = response.data.choices[0].message.content.trim();
         res.json({ ingredients });
 
     } catch (error) {
@@ -40,5 +45,3 @@ app.post('/getIngredients', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-
