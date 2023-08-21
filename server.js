@@ -19,7 +19,7 @@ app.post('/getIngredients', async (req, res) => {
 
     try {
         const response = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
-            prompt: `List the ingredients for the dish: ${dishName}`,
+            prompt: `Can you provide a detailed list of ingredients traditionally used to make this dish: ${dishName}. Give the responses as an ordered list and don't include quantities`,
             max_tokens: 150
         }, {
             headers: {
