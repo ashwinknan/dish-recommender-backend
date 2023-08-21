@@ -40,11 +40,11 @@ app.post('/getIngredients', async (req, res) => {
             messages: [
                 {
                     role: "system",
-                    content: "You are a culinary expert. You only know about dishes and their recipes."
+                    content: "You are a culinary expert. You only know about dishes, their ingredients and their recipes."
                 },
                 {
                     role: "user",
-                    content: `Provide a detailed list of ingredients traditionally used to make the dish ${dishName}. Give the responses as an ordered list, and do not provide any description about the dish or the ingredients.`
+                    content: `Provide an exhaustive list of ingredients traditionally used to make the dish ${dishName}. Give the ingredients as a continuous list separated by commas, and do not provide any description about the dish or the ingredients.`
                 }
             ],
             max_tokens: 350,
