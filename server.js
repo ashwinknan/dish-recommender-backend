@@ -44,7 +44,7 @@ app.post('/getIngredients', async (req, res) => {
                 },
                 {
                     role: "user",
-                    content: `Provide an exhaustive list of ingredients traditionally used to make the dish ${dishName}. Give the ingredients as a continuous list separated by commas, and do not provide any description about the dish or the ingredients.`
+                    content: `Provide an exhaustive list of ingredients traditionally used to make the dish ${dishName}. Give the ingredients as a continuous list separated by commas. No introductory paragraph or no descriptions of ingredients please - just a list of ingredients separated by commas`
                 }
             ],
             max_tokens: 350,
