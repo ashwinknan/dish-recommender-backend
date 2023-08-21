@@ -65,6 +65,41 @@ app.post('/getIngredients', async (req, res) => {
     }
 });
 
+app.post('/getRecipe', async (req, res) => {
+    const dishName = req.body.dishName;
+
+    try {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+            model: "gpt-3.5-turbo",
+            messages: [
+                {
+                    role: "system",
+                    content: "You are a culinary expert. You only know about dishes, their ingredients and their recipes."
+                },
+                {
+                    role: "user",
+                    content: `Provide a step-by-step recipe to prepare 4 servings of the dish ${dishName}. This should be in the form of a numbered list.`
+                }
+            ],
+            max_tokens: 1000,  // Increased tokens to ensure entire recipe is captured
+            temperature: 0.3
+        }, {
+            headers: {
+                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const recipe = response.data.choices[0].message.content.trim();
+        res.json({ recipe });
+
+    } catch (error) {
+        console.error("Error with OpenAI request:", error.response ? error.response.data : error.message);
+        res.status(500).json({ error: 'Failed to retrieve recipe' });
+    }
+});
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
