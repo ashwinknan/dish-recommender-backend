@@ -7,6 +7,11 @@ const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 
+// Add this root route to show a confirmation message when accessing the root URL
+app.get('/', (req, res) => {
+    res.send("Dish Recommender Backend Service is Running!");
+});
+
 app.post('/getIngredients', async (req, res) => {
     const dishName = req.body.dishName;
 
@@ -16,7 +21,7 @@ app.post('/getIngredients', async (req, res) => {
             max_tokens: 150
         }, {
             headers: {
-                'Authorization': `Bearer YOUR_OPENAI_API_KEY`,
+                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -32,3 +37,5 @@ app.post('/getIngredients', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
