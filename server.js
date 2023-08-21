@@ -7,6 +7,8 @@ const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 
+app.use(express.json());
+
 // Add this root route to show a confirmation message when accessing the root URL
 app.get('/', (req, res) => {
     res.send("Dish Recommender Backend Service is Running!");
