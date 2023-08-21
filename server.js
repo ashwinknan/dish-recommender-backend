@@ -19,9 +19,9 @@ app.post('/getIngredients', async (req, res) => {
 
     try {
         const response = await axios.post('https://api.openai.com/v1/engines/davinci/completions', {
-            prompt: `Provide a detailed list of ingredients traditionally used to make this dish: ${dishName}. Give the responses as an ordered list and don't include any inappropriate or offensive language, or obscene sexual references`,
-            max_tokens: 250,
-            temperature:0.2
+            prompt: `You are culinary expert. You only know about dishes and their recipes. Provide a detailed list of ingredients traditionally used to make this dish ${dishName}. Give the responses as an ordered list, and do not provide any description about the dish or the ingredients. Don't include any inappropriate or offensive language, or obscene sexual references`,
+            max_tokens: 350,
+            temperature:0.3
         }, {
             headers: {
                 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
