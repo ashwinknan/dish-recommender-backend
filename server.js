@@ -38,6 +38,7 @@ app.post('/getIngredients', async (req, res) => {
         res.json({ ingredients });
 
     } catch (error) {
+        console.error("Error with OpenAI request:", error.response ? error.response.data : error.message);
         res.status(500).json({ error: 'Failed to retrieve ingredients' });
     }
 });
