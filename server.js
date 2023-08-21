@@ -22,10 +22,9 @@ const corsOptions = {
 
 // Apply CORS with the custom options
 app.use(cors(corsOptions));
-
 app.use(express.json());
 
-// Add this root route to show a confirmation message when accessing the root URL
+// Root route
 app.get('/', (req, res) => {
     res.send("Dish Recommender Backend Service is Running!");
 });
@@ -34,11 +33,15 @@ app.post('/getIngredients', async (req, res) => {
     const dishName = req.body.dishName;
 
     try {
-        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+        const response = await axios.post('https://api.openai.com/v1/engines/gpt-3.5-turbo/completions', {
             messages: [
                 {
+                    role: "system",
+                    content: "You are a culinary expert. You only know about dishes and their recipes."
+                },
+                {
                     role: "user",
-                    content: `You are a culinary expert. You only know about dishes and their recipes. Provide a detailed list of ingredients traditionally used to make the dish ${dishName}. Give the responses as an ordered list, and do not provide any description about the dish or the ingredients.`
+                    content: `Provide a detailed list of ingredients traditionally used to make the dish ${dishName}. Give the responses as an ordered list, and do not provide any description about the dish or the ingredients.`
                 }
             ],
             max_tokens: 350,
@@ -62,4 +65,3 @@ app.post('/getIngredients', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
