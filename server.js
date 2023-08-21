@@ -18,8 +18,8 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // specify the methods you want to allow
-    credentials: true, // this allows session cookies to be sent with the request
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", 
+    credentials: true, 
 };
 
 // Apply CORS with the custom options
@@ -35,7 +35,8 @@ app.post('/getIngredients', async (req, res) => {
     const dishName = req.body.dishName;
 
     try {
-        const response = await axios.post('https://api.openai.com/v1/engines/gpt-3.5-turbo/completions', {
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+            model: "gpt-3.5-turbo",
             messages: [
                 {
                     role: "system",
